@@ -1,0 +1,9 @@
+Yeah, you're pretty much on your own here.
+
+there is sql in PHPMyNetwork.sql that should get you up and running, but this was built for personal use and not really written for distribution. because of a few requests for the code, I have bundled it up for y'all. have at.
+
+If you really really need help, and I have the time,
+
+
+reddit.com/u/FatherStorm
+
