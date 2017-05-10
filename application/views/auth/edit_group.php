@@ -1,11 +1,10 @@
-<h1><?php echo lang('login_heading'); ?></h1>
-<p><?php echo lang('login_subheading'); ?></p>
 <?php
 require_once(__DIR__ . '/../basic.php'); ?>
 <div id="container">
     <div class="pad_15 login">
         <div id="infoMessage"><?php echo $message; ?></div>
         <h1><?php echo lang('edit_group_heading'); ?></h1>
+
 
         <p><?php echo lang('edit_group_subheading'); ?></p>
 

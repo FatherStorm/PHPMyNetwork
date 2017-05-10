@@ -1,5 +1,3 @@
-<h1><?php echo lang('login_heading'); ?></h1>
-<p><?php echo lang('login_subheading'); ?></p>
 <?php
 require_once(__DIR__ . '/../basic.php'); ?>
 <div id="container">
