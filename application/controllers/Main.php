@@ -78,6 +78,7 @@ class Main extends CI_Controller
 
     public function add_patch()
     {
+
         $errors = false;
         $params = array();
         if (!($this->input->get('device_1')) || $this->input->get('device_1') == 0) {
@@ -104,72 +105,12 @@ class Main extends CI_Controller
         } else {
 
 
-            $sql = "SELECT 'from'     AS source,
-                           d.name     AS device_name,
-                           `device 1` AS device,
-                           `side 1`   AS side,
-                           `port 1`   AS port
-                    FROM   patches pa
-                           JOIN devices d
-                             ON d.id = :device_1
-                    WHERE  ( ( `device 1` =:device_1
-                               AND `port 1` = :port_1
-                               AND `side 1` = :side_1 )
-                              OR ( `device 2` =:device_1
-                                   AND `port 2` = :port_1
-                                   AND `side 2` = :side_1 ) )
-                           AND pa.user_id =?
-                    UNION ALL
-                    SELECT 'to'       AS source,
-                           d.name     AS device_name,
-                           `device 1` AS device,
-                           `side 1`   AS side,
-                           `port 1`   AS port
-                    FROM   patches pa
-                           JOIN devices d
-                             ON d.id = :device_2
-                    WHERE  ( ( `device 1` =:device_2
-                               AND `port 1` = :port_2
-                               AND `side 1` = :side_2 )
-                              OR ( `device 2` =:device_2
-                                   AND `port 2` = :port_2
-                                   AND `side 2` = :side_2 ) )
-                           AND pa.user_id =:user  ";
 
-            $myParams = array(
-                $params[':device_1'],
-                $params[':device_1'],
-                $params[':port_1'],
-                $params[':side_1'],
-                $params[':device_1'],
-                $params[':port_1'],
-                $params[':side_1'],
-                $this->session->userdata('user_id'),
-                $params[':device_2'],
-                $params[':device_2'],
-                $params[':port_2'],
-                $params[':side_2'],
-                $params[':device_2'],
-                $params[':port_2'],
-                $params[':side_2'],
-                $this->session->userdata('user_id'),
-            );
-            $query = $this->db->query($sql, $myParams);
             $ports=$this->network_rack->check_port_free( $this->input->get('device_1'), $this->input->get('port_1'), $this->input->get('side_1'), $this->input->get('device_2'), $this->input->get('port_2'), $this->input->get('side_2'),$this->session->userdata('user_id'));
             $message = "";
             if (!count($ports)) {
+                $this->network_rack->assign_patch( $this->input->get('device_1'), $this->input->get('port_1'), $this->input->get('side_1'), $this->input->get('device_2'), $this->input->get('port_2'), $this->input->get('side_2'),$this->session->userdata('user_id'));
 
-                $sql = "INSERT INTO patches (`device 1`,`port 1`,`side 1`,`device 2`,`port 2`,`side 2`,`user_id`) VALUES( ?,?,?,?,?,?,?)";
-                $myParams = array(
-                    $params[':device_1'],
-                    $params[':port_1'],
-                    $params[':side_1'],
-                    $params[':device_2'],
-                    $params[':port_2'],
-                    $params[':side_2'],
-                    $this->session->userdata('user_id'),
-                );
-                $query = $this->db->query($sql, $myParams);
                 $status = true;
             } else {
                 $status = false;
@@ -179,7 +120,7 @@ class Main extends CI_Controller
             }
             echo json_encode(array('status' => $status, 'existing' => $ports, 'message' => $message));
         }
-        die();
+
     }
 
     public function reorder()
