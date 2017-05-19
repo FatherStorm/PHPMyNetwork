@@ -6,10 +6,10 @@ $printable=array();
 ?>
 <?php if($row->ports>=8){?>
     <li class="device col-lg-12" data-id="<?php echo $row->id;?>">
-        <span style="float:right;margin:3px;>" class="<?php echo $icon;?>" title="<?php echo $icon_tt;?>"></span>
+        <span style="float:right;margin:3px;" class="ping_status"><?php if(trim($row->ip_address)){?> <span class='ip_address'><?php echo $row->ip_address;?> </span><?php } ?><span class="<?php echo $icon;?> <?php if(trim($row->ip_address)){?>pingable<?php } ?>" data-ip="<?php if(trim($row->ip_address)){?><?php echo $row->ip_address;?><?php } ?>" title="<?php if(trim($row->ip_address)){?>Ping<?php }else{echo $icon_tt; } ?>"></span></span>
         <span class='device_name' title="<?php echo $row->location;?>"><?php echo $row->name;?> [<?php echo $row->type;?>] <?php echo $row->location;?></span>
 
-        <br/>
+        <br style="clear:both;"/>
 <!--            <pre>--><?php //print_r($row);?><!--</pre>-->
         <?php include(sprintf('device_%d.php',$row->ports));?>
 

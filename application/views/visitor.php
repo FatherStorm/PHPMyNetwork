@@ -12,9 +12,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 <h1><?php echo $title; ?>
-    <a href="#" class='toggleDetails right'><button>Toggle Details</button></a>
-    <a href='/main' class="right"><button><?php echo $loggedIn==true?'Configure':'Log In';?></button></a>
-    <a href='/auth/<?php echo $loggedIn==true?'logout':'create_user';?>'class="right"><button><?php echo $loggedIn==true?'Log Out':'Sign Up';?></button></a>
+   <?php
+    $configure=true;
+    $ping=true;
+    require_once('subnav.php');
+    ?>
 </h1>
 
 <div id="container">

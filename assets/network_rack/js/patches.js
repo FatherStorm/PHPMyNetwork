@@ -82,6 +82,17 @@ $(document).ready(function () {
 		});
 	});
 
+	$(document).delegate('.pingable', 'click', function () {
+		var ip = $(this).data('ip');
+		var target=$(this).closest('.ping_status').find('.ip_address');
+		$.getJSON('/main/ping', {
+			'ip': ip
+		}, function (data) {
+			$(target).css('color',data.class).attr('title',data.status);
+
+		});
+	});
+
 	$(function () {
 		$("#sortable").sortable({
 			update: function (event, ui) {

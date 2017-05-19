@@ -1,14 +1,16 @@
 <?php
 require_once(__DIR__ . '/../basic.php'); ?>
+<div>
+    <?php require_once(__DIR__ .'/../devices/nav.php');?>
+</div>
 <div id="container">
-    <div class="pad_15 login">
+    <div class="pad_15 login" >
         <div id="infoMessage"><?php echo $message; ?></div>
         <h1><?php echo lang('edit_user_heading'); ?></h1>
-        <p><?php echo lang('login_subheading'); ?></p>
         <p><?php echo lang('edit_user_subheading'); ?></p>
 
         <div id="infoMessage"><?php echo $message; ?></div>
-
+        <div style="margin-left:1em;">
         <?php echo form_open(uri_string()); ?>
 
         <p>
@@ -33,12 +35,12 @@ require_once(__DIR__ . '/../basic.php'); ?>
 
         <p>
             <?php echo lang('edit_user_password_label', 'password'); ?> <br/>
-            <?php echo form_input($password); ?>
+            <?php echo form_input($password,''); ?>
         </p>
 
         <p>
             <?php echo lang('edit_user_password_confirm_label', 'password_confirm'); ?><br/>
-            <?php echo form_input($password_confirm); ?>
+            <?php echo form_input($password_confirm,''); ?>
         </p>
 
         <?php if ($this->ion_auth->is_admin()): ?>
@@ -70,5 +72,6 @@ require_once(__DIR__ . '/../basic.php'); ?>
         <p><?php echo form_submit('submit', lang('edit_user_submit_btn')); ?></p>
 
         <?php echo form_close(); ?>
+    </div>
     </div>
 </div>

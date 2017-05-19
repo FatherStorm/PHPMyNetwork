@@ -25,7 +25,13 @@
 ?>
 <div id="container">
 
-    <h1><?php echo $title; ?></h1>
+    <h1><?php echo $title; ?>
+        <?php
+        $configure=true;
+        $ping=true;
+        require_once('subnav.php');
+        ?>
+    </h1>
 
 
     <div id="infoMessage"><?php echo @$message; ?></div>

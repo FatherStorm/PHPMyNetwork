@@ -125,6 +125,7 @@ class Network_rack_model extends SimpleDB{
                AND d.user_id = :user
         ORDER  BY d.position ";
         $params=array(":user"=>$user);
+
         return $this->query($sql,$params);
     }
 
@@ -336,11 +337,8 @@ class Network_rack_model extends SimpleDB{
         $sql="SELECT Count(d.id)   AS count,
                        Sum(d.active) AS active
                 FROM   devices d
-                       JOIN device_type dt
-                         ON dt.device_type = d.device_type
+
                 WHERE  (
-                            ( dt.user_id IS NULL OR dt.user_id = :user )
-                            AND
                             d.user_id = :user
                         ) ";
 
@@ -348,11 +346,11 @@ class Network_rack_model extends SimpleDB{
         return $this->query($sql,$params);
     }
     public function get_device_type_count($user=1){
-        $sql="SELECT Count(d.device_type) AS count
+        $sql="SELECT Count(distinct(d.device_type)) AS count
                 FROM   device_type d
-                WHERE  d.user_id IS NULL
-                        OR d.user_id = :user ";
+                WHERE   d.user_id =  :user ";
         $params=array(':user'=>$user);
+
         return $this->query($sql,$params);
     }
     public function get_patch_count($user=1){
@@ -402,7 +400,7 @@ class Network_rack_model extends SimpleDB{
         }
     }
     public function reorder($user,$order){
-        echo json_encode($this->input->get('order'));
+
         $sql = "UPDATE devices
                 SET    position = NULL
                 WHERE  user_id = :user ";
@@ -411,12 +409,12 @@ class Network_rack_model extends SimpleDB{
         $this->query($sql,$params);
 
 
-        foreach ($this->input->get('order') as $order => $device) {
+        foreach ($order as $o => $device) {
             $sql = "UPDATE devices
                     SET    position = :position
                     WHERE  user_id = :user
                     AND id = :device ";
-            $params = array(':position'=>$order + 1, ':user'=>$user,':device'=>$device);
+            $params = array(':position'=>$o + 1, ':user'=>$user,':device'=>$device);
             $this->query($sql,$params);
         }
     }

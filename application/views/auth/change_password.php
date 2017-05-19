@@ -1,12 +1,15 @@
 <?php
 require_once(__DIR__ . '/../basic.php'); ?>
+<div>
+    <?php require_once(__DIR__ .'/../devices/nav.php');?>
+</div>
 <div id="container">
     <div class="pad_15 login">
         <div id="infoMessage"><?php echo $message; ?></div>
         <h1><?php echo lang('change_password_heading'); ?></h1>
 
         <div id="infoMessage"><?php echo $message; ?></div>
-
+        <div style="margin-left:1em;">
         <?php echo form_open("auth/change_password"); ?>
 
         <p>
@@ -28,5 +31,6 @@ require_once(__DIR__ . '/../basic.php'); ?>
         <p><?php echo form_submit('submit', lang('change_password_submit_btn')); ?></p>
 
         <?php echo form_close(); ?>
+    </div>
     </div>
 </div>

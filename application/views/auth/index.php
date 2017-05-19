@@ -1,5 +1,8 @@
 <?php
 require_once(__DIR__ . '/../basic.php'); ?>
+<div>
+    <?php require_once(__DIR__ .'/../devices/nav.php');?>
+</div>
 <div id="container">
     <div class="pad_15 login">
         <div id="infoMessage"><?php echo $message; ?></div>
@@ -8,7 +11,7 @@ require_once(__DIR__ . '/../basic.php'); ?>
 
         <div id="infoMessage"><?php echo $message; ?></div>
 
-        <table cellpadding=0 cellspacing=10>
+        <table cellpadding=0 cellspacing=10 style="width:100%;">
             <tr>
                 <th><?php echo lang('index_fname_th'); ?></th>
                 <th><?php echo lang('index_lname_th'); ?></th>

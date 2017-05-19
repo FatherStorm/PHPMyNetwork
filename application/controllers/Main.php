@@ -47,7 +47,7 @@ class Main extends CI_Controller
         $this->data['device_types'] = $this->network_rack->get_device_type_count($this->session->userdata('user_id'));
         $this->data['ports']        = $this->network_rack->get_patch_count($this->session->userdata('user_id'));
 
-
+        $this->data['loggedIn']=$this->ion_auth->logged_in();
 
 
         $this->data['title']="Home";
@@ -65,8 +65,6 @@ class Main extends CI_Controller
         $crud->set_relation('device_type', 'device_type', 'name');
         $crud->field_type('user_id', 'hidden', $this->session->userdata('user_id'));
         $crud->where('devices.user_id',$this->session->userdata('user_id'),true,true);
-       $crud->unset_operations();
-
         $crud->unset_columns(array('user_id'));
 
         $output = $crud->render();
@@ -74,6 +72,15 @@ class Main extends CI_Controller
         $output->title = ucwords(str_replace("_", " ", __FUNCTION__));
 
         $this->load->view('edit_1.php', $output);
+    }
+
+    public function ping(){
+
+
+
+        $output=true;
+
+        echo json_encode(array('status' => $output,'class'=>$output==true?'green':'red'));
     }
 
     public function add_patch()
@@ -165,6 +172,7 @@ class Main extends CI_Controller
 
         $output->data =  $this->network_rack->get_patches($this->session->userdata('user_id'));
         $output->title = ucwords(str_replace("_", " ", __FUNCTION__));
+        $output->loggedIn=$this->ion_auth->logged_in();
 
         $this->load->view('patches.php', $output);
     }
@@ -176,6 +184,8 @@ class Main extends CI_Controller
 
         $crud->set_table('device_type');
         $crud->set_relation('device_type', 'device_type', 'name');
+        $crud->field_type('user_id', 'hidden', $this->session->userdata('user_id'));
+        $crud->where('device_type.user_id',$this->session->userdata('user_id'),true,true);
         $crud->unset_columns(array('user_id'));
         $output = $crud->render();
         $output->title = ucwords(str_replace("_", " ", __FUNCTION__));
